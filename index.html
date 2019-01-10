@@ -1,388 +1,773 @@
 <!DOCTYPE html><html lang='en' class=''>
-<html class="" lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style><script src="//static.codepen.io/assets/editor/live/console_runner-1df7d3399bdc1f40995a35209755dcfd8c7547da127f6469fd81e5fba982f6af.js"></script><script src="//static.codepen.io/assets/editor/live/css_reload-5619dc0905a68b2e6298901de54f73cefe4e079f65a75406858d92924b4938bf.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico"><link rel="mask-icon" type="" href="//static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111"><link rel="canonical" href="https://codepen.io/DigitalReligion/pen/jpwNVp">
+<head><script src='//static.codepen.io/assets/editor/live/console_runner-1df7d3399bdc1f40995a35209755dcfd8c7547da127f6469fd81e5fba982f6af.js'></script><script src='//static.codepen.io/assets/editor/live/css_reload-5619dc0905a68b2e6298901de54f73cefe4e079f65a75406858d92924b4938bf.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/widilo/pen/QzBwQP" />
 
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<style class="cp-pen-styles">/*!
+ * COCON HEX2RGB Color Converter
+ * by widilo® (registered trademark of Heike Vollmers * and Henning Münnecke, Münnecke & Vollmers GbR)
+ */
+ 
+/* ---------------
+   # Imports 
+--------------- */
 
-<style class="cp-pen-styles">body {
-  padding-top: 75px;
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/Supermarket-shopping-cart-1.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+
+/* ---------------
+   # General 
+--------------- */
+ 
+body {
+	font-family: "Open Sans", sans-serif;
+	font-size: 14px;
+	margin: 0;
+	padding: 0; 
+  }
+ 
+ h1, h2, h3, h4, h5, p {	
+	font-family: "Open Sans", sans-serif;
+  }
+
+p, li {
+	color: grey;
+	font-size: 16px; 
+	font-family: "Open Sans",sans-serif;
+	font-weight: 300;
+  }
+
+#FCEEB5 a  {
+  color: #FCEEB5;
+  }
+#A2CCB6 a {
+  color: #A2CCB6;
+  }
+#EE786E a {
+  color: #EE786E;
+  }
+
+.mgt {
+	margin-top: 80px;
+  }
+
+.colors #colorError {
+  display: none;
+  }
+
+/* ---------------
+   # Form
+--------------- */
+
+input#hex.color-field {
+	font-size: 20px; 
+	letter-spacing: 1px;
+  font-weight: 800;
+  }
+
+input#rgb.color-field {	
+	font-size: 20px; 
+	letter-spacing: 1.5px;
+  font-weight: 800;
+  }
+
+/* ---------------
+   # Overlay Menu
+--------------- */
+
+.hamburger {
+	z-index: 1; 
+	right: 55px; 
+	top: 52px; 
+	position: absolute; 
+	color: white; 
+	cursor:pointer;
+  }
+
+.overlay {
+  height: 0%;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgb(255,255,255);
+  background-color: rgba(255,255,255, 0.9);
+  overflow-y: hidden;
+  transition: 0.5s;
+  }
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  }
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 28px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+	text-align: center;
+	padding-left:60px;
+  }
+
+.overlay a:hover, .overlay a:focus {
+  color: #000;
+  }
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 70px;
+  }
+
+@media screen and (max-height: 450px) {
+  .overlay {overflow-y: auto;}
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+      font-size: 40px;
+      top: 0px;
+      right: 30px;
+      }
+  }
+
+/* ---------------
+   # Colorfield
+--------------- */
+
+.cfstyle {
+	width: 100%; 
+	background: rgba(255,255,255,.2); 
+	border-bottom: 1px solid #666 !important;
+  }
+
+#hexHelp {
+  margin-left: 13px
+  }
+
+/* ---------------
+   # Footer
+--------------- */
+p.pfooter a {
+  font-family: 'Open Sans'; 
+  text-transform: uppercase; 
+  color: #c3c3c3;
+  }
+
+.footer {
+	bottom:0; 
+	display: block; 
+	margin-top: 60px;
+  }
+
+.footer p, .footer-bottom p {
+	font-size: 12px; 
+	margin: 0 auto; 
+	display: block; 
+	color: #333; 
+	font-weight: 400; 
+	position: relative; 
+	bottom: 5px;
+  }
+
+.footer a, .footer-bottom a {
+	font-size: 13px; 
+	margin: 0 auto; 
+	color: #333; 
+	font-weight: 400; 
+	position: relative; 
+  }
+
+.footer a:hover, .footer-bottom a:hover {
+	color: #666; 
+  }
+
+.footer-bottom {
+	margin: 0 auto; 
+	position: absolute; 
+	bottom: 0;
+  }
+
+/* ---------------
+   # Animated BG
+--------------- */
+ 
+.animated-bg {
+	background: linear-gradient(-45deg, #EE786E, #EE7752, #E73C7E, #23A6D5, #EE786E, #23D5AB, #FCEEB5, #A2CCB6, #EE786E, #A2CCB6);
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 15s ease infinite;
+	border-bottom: 1px solid white;
+  }
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	  }
+	100% {
+		background-position: 0% 50%
+	  }
+  }
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	  }
+	50% {
+		background-position: 100% 50%
+	  }
+	100% {
+		background-position: 0% 50%
+	  }
+  }
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	  }
+	50% {
+		background-position: 100% 50%
+	  }
+	100% {
+		background-position: 0% 50%
+	  }
+  }
+
+/* ---------------
+   # Sticky
+--------------- */
+
+ .sticky.is-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  }
+
+/* ---------------
+   # Topbar
+--------------- */
+
+.navbar {
+    margin: 0 auto;
+    height: 250px;
+    background: transparent;
+    color: #fff;
+  }
+
+.navbar-brand a.brand-small, .brand-small {
+    color: #fff !important;
+    font-family: "Open Sans",sans-serif;
+    letter-spacing: 3px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: .9rem;
+  }
+
+@media screen and (max-width: 498px) {
+	.navbar {
+		height: 170px !important;
+	  }
+	span.brand-small {
+		font-size: 12px !important;
+    letter-spacing: 1px;
+	  }
+  }
+
+a.bsa {
+	font-weight: 900; 
+	border-bottom: 1px dotted #fff;
+  }
+
+span.brand-small {
+	padding: 0 0 0 0; 
+	margin: 0 0 0 0;
+  }
+a.brand-small {
+	font-weight: 900; 
+	border-bottom: 1px dotted #fff;
+  }
+
+.navbar-brand a {
+  color: #fff !important;
+  font-family: "Open Sans",sans-serif;
+  letter-spacing: 3px;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 3rem;
+  }
+a.nbp {
+  padding-right: 35px;
+  }
+
+.navbar a {
+	color: #fff;
+  font-family: 'Open Sans';
+	font-weight: bold;
+	letter-spacing: 0px;
+	text-decoration: none;
+  }
+
+.navbar-brand i {
+	padding-right: 10px;
+  }
+ 
+.container h1 {
+	text-align: center;
+  font-family: 'Open Sans';
+	font-size: 44px;
+	margin-bottom: 30px; 
+	font-weight: bold;
+	text-transform: uppercase;
+	color: grey;
+  }
+
+.imprint h2 {
+	text-align: left;
+  font-family: "Open Sans",sans-serif;
+	color: #666;
+	font-size: 20px;
+  }
+
+.imprint {
+	margin-top: 60px;
+  }
+
+.wrapper {
+	width: 100%;
+	margin: 0 0 50px 0;
+	position: relative; 
+	display: block;
+  }
+
+.wrapper .color-field, .color-field {
+	border: none;
+	border-bottom: 1px solid #fa7676;
+	outline: none;
+	height: 40px;
+	font-size: 22px;
+	padding: 0 10px;
+	width: 100%;
+	margin-right: 10px;
+	color: #666; 
+  }
+	
+.field-bg {
+	background: rgba(255,255,255,0.5);
+	width: 70%;
+  }
+
+.color-field {
+	border: none;
+	border-bottom: 1px solid #fa7676;
+	outline: none;
+	height: 40px;
+	font-size: 18px;
+	padding: 0 10px;
+	width: 100%;
+	margin-right: 10px;
+  color: #666;
+  background-image: linear-gradient(-45deg, #EE786E 50%, #FCEEB5 55%, #A2CCB6 60%);
+  background-size: 300% 100%;
+  animation: txtani 10s ease infinite;
+  -webkit-animation: txtani 10s ease infinite;
+	-moz-animation: txtani 10s ease infinite;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  }
+
+@keyframes txtani { 
+    0% { 
+      background-position:0% 0% 
+      }
+    30% { 
+      background-position:0% 0% 
+      }
+    50% { 
+      background-position:99% 0% 
+      }
+    70% { 
+      background-position:0% 0% 
+      }
+    100% { 
+      background-position:0% 0% 
+      }
+  }
+
+@-webkit-keyframes txtani { 
+    0% { 
+      background-position:0% 0% 
+      }
+    30% { 
+      background-position:0% 0% 
+      }
+    50% { 
+      background-position:99% 0% 
+      }
+    70% { 
+      background-position:0% 0% 
+      }
+    100% { 
+      background-position:0% 0% 
+      }
+  } 
+
+@-moz-keyframes txtani { 
+    0% { 
+      background-position:0% 0% 
+      }
+    30% { 
+      background-position:0% 0% 
+      }
+    50% { 
+      background-position:99% 0% 
+      }
+    70% { 
+      background-position:0% 0% 
+      }
+    100% { 
+      background-position:0% 0% 
+      }
+  }
+
+.colors .color-field {
+	border: none;
+	border-bottom: 1px solid #fa7676;
+	outline: none;
+	height: 40px;
+	font-size: 24px;
+	padding: 0 10px;
+	width: 70%;
+	margin-right: 10px;
+	color: #666; 
+	background: transparent;
+  }
+
+.container .wrapper .button {
+	border: none;
+	background: #A2CCB6;
+	color: #fff;
+	text-transform: uppercase;
+	height: 40px;
+	width: 60px;
+	outline: none;
+	font-size: 25px;
+	position: absolute;
+	top: 0px;
+	right: 0;
+	border: 0px solid #fff;
+  box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.55);
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.55);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(0,0,0,0.55);
+  }
+
+.container .wrapper .button:hover {
+	background-color: #EE786E; 
+  }
+
+.container .wrapper .button:active {
+	background-color: #f84545; 
+  }
+
+.container .wrapper .button:disabled {
+	background-color: #ccc; 
+  }
+
+.container .wrapper p a {
+	text-decoration: none;
+	color: #fa7676; 
+  }
+
+.container .wrapper p a:hover {
+	border-bottom: 1px dashed #fa7676; 
+  }
+ 
+ /* ---------------
+   # Normalize https://necolas.github.io/normalize.css/
+--------------- */
+
+html {
+	font-family: sans-serif;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+  }
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+  }
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+	display: block;
+  }
+
+audio,
+canvas,
+progress,
+video {
+	display: inline-block;
+	vertical-align: baseline;
+  }
+
+audio:not([controls]) {
+	display: none;
+	height: 0;
+  }
+
+[hidden],
+template {
+	display: none;
+  }
+
+a {
+	background-color: transparent;
+	text-decoration: none;
+  }
+
+a:active,
+a:hover {
+	outline: 0;
+	text-decoration: none;
+  }
+
+abbr[title] {
+	border-bottom: 1px dotted;
+  }
+
+b,
+strong {
+	font-weight: bold;
+  }
+
+dfn {
+	font-style: italic;
+  }
 
 h1 {
-  text-align: center;
-  font-weight: 600;
-  color: white;
+	font-size: 2em;
+	margin: 0.67em 0;
+  }
+
+mark {
+	background: #ff0;
+	color: #000;
+  }
+
+small {
+	font-size: 80%;
+  }
+
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+  }
+
+sup {
+	top: -0.5em;
+  }
+
+sub {
+	bottom: -0.25em;
+  }
+
+img {
+	border: 0;
+  }
+
+svg:not(:root) {
+	overflow: hidden;
+  }
+
+figure {
+	margin: 1em 40px;
+  }
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+  }
+
+pre {
+	overflow: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace, monospace;
+	font-size: 1em;
+  }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	color: inherit;
+	font: inherit;
+	margin: 0;
+  }
+
+button {
+	overflow: visible;
+  }
+
+button,
+select {
+	text-transform: none;
+  }
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+  }
+
+button[disabled],
+html input[disabled] {
+	cursor: default;
+  }
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+  }
+
+input {
+	line-height: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+fieldset {
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+	border: 0;
+	padding: 0;
+}
+
+textarea {
+	overflow: auto;
+}
+
+optgroup {
+	font-weight: bold;
 }
 
 table {
-  border: 0;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-tr {
-  background: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  padding: 35px;
-  cursor: pointer;
-}
-
-tr:hover, tr:nth-child(2n+0):hover {
-  background: #f8fbeb;
-  cursor: pointer;
-}
-
-tr:nth-child(2n+0) {
-  background: white;
-}
-
-td {
-  padding: .625em;
-  line-height: 2.8;
-}
-
+td,
 th {
-  padding: .625em;
-  background-color: #142029;
-  color: white;
-  padding: 1.35em .68rem;
-  font-size: 1.0em;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  text-align: left;
+	padding: 0;
 }
 
-@media screen and (max-width: 768px) {
-  h1 {
-    margin: 40px 0;
-  }
+*, *:before, *:after {		
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}</style></head><body>
+	<!-- Hungry? Hamburger Menu -->
+	<div id="hamNav" class="overlay">
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	  <div class="overlay-content">
+      <a class="FCEEB5" href="#"><i class="fa fa-paint-brush" style="color: #FCEEB5; text-shadow: 2px 2px 10px #666666;"></i> --- <strong>#FCEEB5</strong></a>
+      <a class="A2CCB6" href="#"><i class="fa fa-paint-brush" style="color: #A2CCB6; text-shadow: 2px 2px 10px #666666;"></i> --- <strong>#A2CCB6</strong></a>
+      <a class="EE786E" href="#"><i class="fa fa-paint-brush" style="color: #EE786E; text-shadow: 2px 2px 10px #666666;"></i> --- <strong>#EE786E</strong></a>
+	  </div>
+	</div>
 
-  body {
-    padding-top: 95px !important;
-  }
+	<span class="hamburger" onclick="openNav()"><i class="fa fa-bars fa-2x"></i></span>
 
-  table {
-    border: 0;
-  }
-
-  tr {
-    border-bottom: 3px solid #142029;
-    display: block;
-    margin-bottom: .625em;
-    margin: 10px 10px 45px 10px;
-  }
-
-  tr:last-of-type {
-    margin-bottom: 45px;
-  }
-
-  td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .9em;
-    text-align: right;
-  }
-
-  td:before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  td:last-child {
-    border-bottom: 0;
-  }
-
-  thead {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-
-  .box {
-    background: transparent !important;
-    -webkit-box-shadow: 0px 0px 8px 3px transparent !important;
-    -moz-box-shadow: 0px 0px 8px 3px transparent !important;
-    box-shadow: 0px 0px 8px 3px transparent !important;
-  }
-}
-.box {
-  max-width: 800px;
-  margin: 0 auto;
-  color: #142029;
-  background: white;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.25);
-}
-
-.fruit {
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/fruit.svg");
-  display: block;
-  float: left;
-  text-indent: -9999px;
-  margin-right: 15px;
-  width: 42px;
-  height: 38px;
-  background-size: 42px 42px;
-}
-
-.beverage {
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/beverage.svg");
-  display: block;
-  float: left;
-  text-indent: -9999px;
-  margin-right: 15px;
-  width: 42px;
-  height: 38px;
-  background-size: 42px 42px;
-}
-
-.pasta {
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/pasta.svg");
-  display: block;
-  float: left;
-  text-indent: -9999px;
-  margin-right: 15px;
-  width: 42px;
-  height: 38px;
-  background-size: 42px 42px;
-}
-
-.dessert {
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/dessert.svg");
-  display: block;
-  float: left;
-  text-indent: -9999px;
-  margin-right: 15px;
-  width: 42px;
-  height: 38px;
-  background-size: 42px 42px;
-}
-
-.dairy {
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/dairy.svg");
-  display: block;
-  float: left;
-  text-indent: -9999px;
-  margin-right: 15px;
-  width: 42px;
-  height: 38px;
-  background-size: 42px 42px;
-}
-
-@media only screen and (max-width: 768px) {
-  .fruit {
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/fruit.svg");
-    width: 62px;
-    height: 62px;
-    background-size: 62px 72px;
-    position: absolute;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: -35px auto;
-    left: 0;
-    right: 0;
-  }
-
-  .beverage {
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/beverage.svg");
-    width: 62px;
-    height: 62px;
-    background-size: 62px 72px;
-    position: absolute;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: -35px auto;
-    left: 0;
-    right: 0;
-  }
-
-  .pasta {
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/pasta.svg");
-    width: 62px;
-    height: 62px;
-    background-size: 62px 72px;
-    position: absolute;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: -35px auto;
-    left: 0;
-    right: 0;
-  }
-
-  .dessert {
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/dessert.svg");
-    width: 62px;
-    height: 62px;
-    background-size: 62px 72px;
-    position: absolute;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: -35px auto;
-    left: 0;
-    right: 0;
-  }
-
-  .dairy {
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/dairy.svg");
-    width: 62px;
-    height: 62px;
-    background-size: 62px 72px;
-    position: absolute;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: -35px auto;
-    left: 0;
-    right: 0;
-  }
-}
-</style></head><body>
-
-
-<base href="/">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/905237/bonsaiUI-custombuild.css">
-
-
-<header class="navbar fixed-top" role="navigation">
-  <div class="brand"> <a target="_blank" href="https://github.com/DrkDevil/bankoa">ORAN BUYS YOUR STUFF</a> </div>
-  <ul>
-    <li><a href="https://codepen.io/challenges/2018/july">100% Customer Satisfaction</a></li>
-  </ul>
-  <ul class="flt-right">
-    <li><a class="btn-outlined hidden-md" target="_blank" href="https://github.com/DrkDevil/bankoa">Profile</a></li>
-  <li><a class="btn-outlined hidden-md" target="_blank" href="https://github.com/DrkDevil/bankoa">Forum Thread</a></li>
-  <li><a class="btn-outlined hidden-md" target="_blank" href="https://github.com/DrkDevil/bankoa">Start Trade</a></li>
-  </ul>
-</header>
-<section>
-  <h1>ORAN's Price List</h1>
-  <div class="box">
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Category</th>
-          <th scope="col">Item</th>
-          <th scope="col">Type</th>
-          <th scope="col">Brand</th>
-		      <th scope="col">Quantiy</th>
-        </tr>
-      </thead>
-      <tbody id="groceryList"><tr><td data-label="Category"><div class="fruit"></div>fruit</td><td data-label="Item">apples</td><td data-label="Type">Honey Crisp</td><td data-label="Brand">Little cuties</td><td data-label="Quantity">10</td></tr><tr><td data-label="Category"><div class="beverage"></div>beverage</td><td data-label="Item">milk</td><td data-label="Type">2%</td><td data-label="Brand">generic</td><td data-label="Quantity">1 gallon</td></tr><tr><td data-label="Category"><div class="pasta"></div>pasta</td><td data-label="Item">Pasta</td><td data-label="Type">Penne</td><td data-label="Brand">Barilla</td><td data-label="Quantity">3</td></tr><tr><td data-label="Category"><div class="dessert"></div>dessert</td><td data-label="Item">Gelatin dessert</td><td data-label="Type">Green</td><td data-label="Brand">Jello</td><td data-label="Quantity">3</td></tr><tr><td data-label="Category"><div class="dairy"></div>dairy</td><td data-label="Item">Yogurt</td><td data-label="Type">Assorted flavors</td><td data-label="Brand">Chobani</td><td data-label="Quantity">12</td></tr><tr><td data-label="Category"><div class="pasta"></div>pasta</td><td data-label="Item">Pasta</td><td data-label="Type">Linguini</td><td data-label="Brand">Barilla</td><td data-label="Quantity">3</td></tr><tr><td data-label="Category"><div class="beverage"></div>beverage</td><td data-label="Item">Apple juice</td><td data-label="Type">regular</td><td data-label="Brand">Happy Farms</td><td data-label="Quantity">2</td></tr><tr><td data-label="Category"><div class="beverage"></div>beverage</td><td data-label="Item">Vodka</td><td data-label="Type">Tangerine</td><td data-label="Brand">Grey Goose</td><td data-label="Quantity">1</td></tr></tbody>
-    </table>
-  </div>
-</section>
-<footer class="fixed-bottom">
-  <div class="flt-left">Copyright, MIT License</div>
-  <div class="flt-right">Created by: <a target="_blank" href="http://dev.digitalreligion.net">Digital Religion</a></div>
-</footer>
-<!-- Jquery Library files -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-
-
-<script src="//static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
-<script>//Json Object
-var groceryList = [
-{
-  Category: "fruit",
-  Item: "apples",
-  Type: "Honey Crisp",
-  Brand: "Little cuties",
-  Qty: 10 },
-
-{
-  Category: "beverage",
-  Item: "milk",
-  Type: "2%",
-  Brand: "generic",
-  Qty: "1 gallon" },
-
-{ Category: "pasta", Item: "Pasta", Type: "Penne", Brand: "Barilla", Qty: 3 },
-{
-  Category: "dessert",
-  Item: "Gelatin dessert",
-  Type: "Green",
-  Brand: "Jello",
-  Qty: 3 },
-
-{
-  Category: "dairy",
-  Item: "Yogurt",
-  Type: "Assorted flavors",
-  Brand: "Chobani",
-  Qty: 12 },
-
-{
-  Category: "pasta",
-  Item: "Pasta",
-  Type: "Linguini",
-  Brand: "Barilla",
-  Qty: 3 },
-
-{
-  Category: "beverage",
-  Item: "Apple juice",
-  Type: "regular",
-  Brand: "Happy Farms",
-  Qty: 2 },
-
-{
-  Category: "beverage",
-  Item: "Vodka",
-  Type: "Tangerine",
-  Brand: "Grey Goose",
-  Qty: 1 }];
-
-
-// loop through the array and get each item
-for (i = 0; i < groceryList.length; i++) {if (window.CP.shouldStopExecution(0)) break;
-  // Create variables for Json Values
-  var Category = groceryList[i].Category;
-  var Item = groceryList[i].Item;
-  var Type = groceryList[i].Type;
-  var Brand = groceryList[i].Brand;
-  var Qty = groceryList[i].Qty;
-  // Create HTML Output
-  $("#groceryList").append(
-  "<tr>" +
-  '<td data-label="Category"><div class="' +
-  Category +
-  '"></div>' +
-  Category +
-  "</td>" +
-  '<td data-label="Item">' +
-  Item +
-  "</td>" +
-  '<td data-label="Type">' +
-  Type +
-  "</td>" +
-  '<td data-label="Brand">' +
-  Brand +
-  "</td>" +
-  '<td data-label="Quantity">' +
-  Qty +
-  "</td>" +
-  "</tr>");
-
-}window.CP.exitedLoop(0);
-//# sourceURL=pen.js
-</script>
+	<!-- COCON Navbar, Animated Gradient BG Container -->
+	<div class="container-fluid animated-bg">
+		<div class="row">
+		<!-- COCON Navbar, Navbar-Brand -->
+		<div class="navbar">
+			<div class="col-md-12 col-sm-12">
+				<div class="navbar-brand"><i class="fa fa-paint-brush fa-2x"></i><a class="nbp" href="#">COCON</a><span class="brand-small">HEX to RGB Color Converter</span></div>
+			</div>
+		</div><!-- ./end navbar -->
+		</div><!-- ./end row -->
+	</div><!-- ./end container -->
+	
+	<!-- Here we go! COCON Color Converter Container -->
+	<div class="container mgt">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<div class="wrapper">
+					<div class="field-bg">
+						<input type="text" class="color-field cfstyle" id="hex" placeholder="E.g. #FCEEB5, #A2CCB6, #EE786E">
+					</div>
+					<small id="hexHelp" class="form-text text-muted">HEX Wert, Farbe, Color</small>
+					<button class="button" data-toggle="tooltip" data-html="true" title="Copy HEX Color to clipboard" id="hexBtn"><i class="fa fa-paste"></i></button>
+				</div>
+				<div class="wrapper">
+					<div class="field-bg">
+						<input type="text" class="color-field cfstyle" id="rgb" placeholder="RGB(?,?,?)">
+					</div>
+					<small id="hexHelp" class="form-text text-muted">RGB Wert, Farbe, Color</small>
+					<button class="button" data-toggle="tooltip" data-html="true" title="Copy RGB Color to clipboard" id="rgbBtn"><i class="fa fa-paste"></i></button>
+				</div>
+			</div>
+		</div><!-- ./end row -->
+	</div><!-- ./end main container -->
+		
+	<!-- Last but not least! COCON Footer -->
+	<div class="container footer">
+		<div class="row">
+			<p class="text-center pfooter"><a href="https://widilo.de">made in brest (de) by widilo®</a></p>
+		</div><!-- ./end row -->
+	</div>	<!-- ./end footer container -->	
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/popper.min.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'></script><script src='https://widilo.de/cocon/js/cocon.js'></script>
 </body></html>
